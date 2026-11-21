@@ -3,76 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Trophy Atlas — GTA VI Platinum Guide &amp; Tracker</title>
+<title>Leonida Trophy Atlas — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: cited guides, platinum roadmap, missable warnings, checklist, filters and spoiler mode.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
-  <div>
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
     <h1>Leonida Trophy Atlas</h1>
-    <p class="sub">The complete offline guide &amp; tracker for all 55 PlayStation 5 trophies in Grand Theft Auto VI — every name, description and grade verified against the live tracker lists, with a sourced guide for each trophy and a roadmap to the Platinum.</p>
-    <p class="meta">55 trophies · 1 Platinum · 2 Gold · 6 Silver · 46 Bronze · 28 hidden · 0 online · all single-player · ~200 hours to Platinum</p>
-  </div>
-  <div class="progress-card" id="progressCard">
-    <div class="big" id="progressBig">0 / 55</div>
-    <div class="bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
-    <div class="counts" id="progressCounts"></div>
-    <div class="platinum-line" id="platinumLine">Platinum “Vice Got a Price!” unlocks when the other 54 are earned.</div>
+    <p class="lede">Every trophy, its official name and grade, a guide in our own words with its sources, a four-stage road to the platinum, and a tracker that remembers your progress in this browser. Works fully offline.</p>
+    <div class="tally" id="tally" aria-live="polite">
+      <div class="tally-box"><span class="tally-num" id="tallyEarned">0</span><span class="tally-label">earned of 55</span></div>
+      <div class="tally-box"><span class="tally-num" id="tallyPct">0%</span><span class="tally-label">to platinum</span></div>
+      <div class="tally-box"><span class="tally-num">1P &middot; 2G &middot; 6S &middot; 46B</span><span class="tally-label">28 hidden &middot; 0 online</span></div>
+      <div class="tally-bar"><div class="tally-fill" id="tallyFill" style="width:0%"></div></div>
+    </div>
   </div>
 </header>
 
-<div class="warn" id="missableWarn">
-  <strong>⚠ One trophy may be missable.</strong>
-  <a href="#trophy-28">Positive Mental Attitude</a> — meditate on Jason’s house balcony in Chapter 1, the morning after the mission “Down to Earth”. Follow Lucia, choose “Accept”. It is permanently unavailable after Chapter 1, and whether it is strictly required is still unconfirmed — do it anyway and keep a Chapter 1 manual save.
-</div>
-
-<section class="controls" aria-label="Filters and progress tools">
-  <div class="row">
-    <div class="chips" id="kindChips" role="group" aria-label="Filter by type"></div>
-  </div>
-  <div class="row">
-    <label>Grade
-      <select id="gradeFilter">
-        <option value="all">All grades</option>
-        <option value="platinum">Platinum</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-    </label>
-    <label>Search <input id="search" type="search" placeholder="Trophy name or keyword…"></label>
-    <label class="check"><input id="spoilerToggle" type="checkbox" checked> Hide story spoilers</label>
-    <label class="check"><input id="earnedOnly" type="checkbox"> Earned only</label>
-    <button id="expandAll" type="button">Expand all guides</button>
-    <button id="collapseAll" type="button">Collapse all</button>
-  </div>
-  <div class="row">
-    <button id="exportBtn" type="button">Export progress (JSON)</button>
-    <label class="import">Import progress <input id="importFile" type="file" accept="application/json"></label>
-    <button id="resetBtn" type="button">Reset progress</button>
-    <span class="saved" id="savedNote">Progress is saved in this browser (localStorage). No network is used.</span>
-  </div>
-</section>
-
-<section class="roadmap" id="roadmap" aria-label="Roadmap to Platinum">
-  <h2>Roadmap to the Platinum</h2>
-  <p class="roadmap-intro">Four stages, in order. Trophies are tagged with their stage; use the stage filter below the roadmap to see what belongs where. Every open guide shows its prose first, then its steps, then its cited sources.</p>
-  <div class="stages" id="stages"></div>
-</section>
-
 <main>
-  <div class="list-head">
-    <h2 id="listTitle">All trophies</h2>
-    <span id="shownCount"></span>
-  </div>
-  <div id="emptyState" class="empty" hidden></div>
-  <div id="trophyList" class="trophy-list"></div>
+  <section class="warn" id="warnBox" aria-label="Missable warning">
+    <h2>One trophy can be missed</h2>
+    <p><strong>Positive Mental Attitude</strong> — meditate at every spot — has a single moment in Chapter 1 that never comes back: the morning after the mission <em>Down to Earth</em>, talk to Lucia in the kitchen at Jason&rsquo;s house, follow her to the balcony and accept the meditation. No mission replay exists, so do it then and keep a manual save from Chapter 1. It is not yet confirmed whether that balcony moment is strictly required for the trophy, so this atlas tells you to do it anyway rather than risk it. Every other trophy is still earnable after the story.</p>
+  </section>
+
+  <section class="road" id="roadBox" aria-label="Platinum roadmap">
+    <h2>Road to the platinum — four stages</h2>
+    <p class="road-note">About 200 hours in total: roughly 60&ndash;80 for the story, the rest for cleanup. Play in order; the tracker counts what you have earned in each stage.</p>
+    <ol class="road-list">
+      <li class="road-step" data-stage="1">
+        <h3>Stage 1 — Main story</h3>
+        <p>Play Chapters 1 to 5 in order. All twelve story trophies pop as you go, including the gold for the final mission. Do the Chapter 1 balcony meditation the morning after <em>Down to Earth</em>.</p>
+        <p class="road-count"><span data-stage-count="1">0</span> / 12 earned</p>
+      </li>
+      <li class="road-step" data-stage="2">
+        <h3>Stage 2 — Strangers &amp; partners</h3>
+        <p>Finish the stranger strands — Andy, Kenton, Billy, Randy, Tyrone, Bret, Kirk, Kyle, Yago and Pilot Pete — plus the partner trophies and Cal&rsquo;s fishing challenge. Do Yago&rsquo;s time-sensitive race the moment it appears.</p>
+        <p class="road-count"><span data-stage-count="2">0</span> / 12 earned</p>
+      </li>
+      <li class="road-step" data-stage="3">
+        <h3>Stage 3 — Activities &amp; collections</h3>
+        <p>Work the repeatable world: 250 stunts, 42 shooting-range golds, drone races, 20 race wins, card sets, 100 WAiNK scans, 50 challenges, 100 vehicles, garages, car registrations and the money trophies.</p>
+        <p class="road-count"><span data-stage-count="3">0</span> / 14 earned</p>
+      </li>
+      <li class="road-step" data-stage="4">
+        <h3>Stage 4 — Open world &amp; 100%</h3>
+        <p>Clear the open-world stunts — vaults, tanks, the airport plane, the bowling alley, the criminal profile — then finish the 35-item 100% checklist for the gold, and the platinum follows.</p>
+        <p class="road-count"><span data-stage-count="4">0</span> / 17 earned</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="controls" aria-label="Tracker controls">
+    <div class="controls-row">
+      <label class="field">Search
+        <input type="search" id="queryBox" placeholder="Search a trophy, mission or keyword…" autocomplete="off">
+      </label>
+      <label class="field">Kind
+        <select id="kindBox">
+          <option value="all">All kinds</option>
+          <option value="story">Story</option>
+          <option value="missable">Missable</option>
+          <option value="collectibles">Collectibles</option>
+          <option value="activities">Activities</option>
+          <option value="strangers">Strangers</option>
+          <option value="partner">Partner</option>
+          <option value="open-world">Open world</option>
+          <option value="secret">Secret / unconfirmed</option>
+          <option value="online">Online (0)</option>
+          <option value="hidden">Hidden</option>
+        </select>
+      </label>
+      <label class="field">Grade
+        <select id="gradeBox">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="field">Stage
+        <select id="stageBox">
+          <option value="all">All stages</option>
+          <option value="1">Stage 1 — Story</option>
+          <option value="2">Stage 2 — Strangers</option>
+          <option value="3">Stage 3 — Activities</option>
+          <option value="4">Stage 4 — Cleanup</option>
+        </select>
+      </label>
+    </div>
+    <div class="controls-row">
+      <label class="check"><input type="checkbox" id="spoilerBox" checked> Spoiler mode — hide story trophy names until earned</label>
+      <label class="check"><input type="checkbox" id="unearnedBox"> Show unearned only</label>
+      <span class="spacer"></span>
+      <button type="button" id="exportBtn">Export progress</button>
+      <button type="button" id="importBtn">Import progress</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+      <button type="button" id="resetBtn">Reset tracker</button>
+    </div>
+    <p class="controls-note" id="resultNote">Showing all 55 trophies.</p>
+  </section>
+
+  <section aria-label="Trophy list">
+    <ul class="card-list" id="cardList"></ul>
+    <p class="empty" id="emptyNote" hidden>No trophy matches these filters. Clear the search or pick another kind.</p>
+  </section>
 </main>
 
-<footer>
-  <p>Unofficial fan guide. Not affiliated with Rockstar Games or Sony. No Rockstar logos or official artwork are used; the trophy icons are original CSS shapes. Trophy names, descriptions and grades are the official list as reported by the trackers; every guide is written in our own words, shows its prose first, then its steps, and cites its sources next to the guide. Sources are linked for the reader — the app itself fetches nothing over the network.</p>
-  <p>Data: <code>data/trophies.json</code> · List verified 2026-11-19 against TrueAchievements (live), PowerPyx and GTABase; guide prose added in round 2, 2026-11-21.</p>
+<footer class="foot">
+  <p>Guides are written for this atlas in our own words. Each trophy names its sources beside its guide; a step with no source behind it is marked as unconfirmed. Official trophy names, descriptions and grades are shown as PlayStation publishes them. No Rockstar logo, artwork or game screenshot is used — the look is our own. Progress is stored only in your browser (localStorage) and can be exported as JSON.</p>
+  <p>Sources consulted: PowerPyx, GTABase, OutputLag, TrueAchievements, GTADB, HowToVideoGame, Push Square, GamesRecon, eso.jffk.org, gtasix.how. Re-check the cited guides for the five unconfirmed triggers (IDs 44, 45, 49, 50, 51) — they are still being verified by the community.</p>
 </footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
