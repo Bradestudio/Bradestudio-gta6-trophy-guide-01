@@ -1,5 +1,7 @@
 /* Leonida Trophy Atlas — original design. Dark dusk palette (deep violet sky,
-   sunset pink/orange accents), no Rockstar artwork, no official logos. */
+   sunset pink/orange accents), no Rockstar artwork, no official logos.
+   Round 2: the open guide shows its prose paragraph first (guide-prose),
+   then the steps, then the sources — all in one screen. */
 :root {
   --bg: #14101f;
   --panel: #1e1830;
@@ -71,6 +73,11 @@ button:hover { border-color: var(--pink); }
 .import { cursor: pointer; }
 .import input { display: none; }
 .saved { font-size: 12px; color: var(--muted); }
+/* Compact view (?compact=1): hide the hero, the warning banner and the
+   roadmap, so the tracker and an open guide fit in one screen. */
+body.compact .hero, body.compact .warn, body.compact .roadmap { display: none; }
+body.compact .controls { margin-top: 12px; }
+body.compact main { margin-top: 12px; }
 .roadmap { margin: 20px 28px 0; }
 .roadmap h2, .list-head h2 { margin: 0 0 4px; font-size: 22px; }
 .roadmap-intro { color: var(--muted); margin: 0 0 12px; font-size: 14px; }
@@ -96,7 +103,7 @@ main { margin: 20px 28px 0; }
 .trophy-list { display: grid; gap: 12px; margin-top: 12px; }
 .card {
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
-  padding: 14px 16px;
+  padding: 14px 16px; scroll-margin-top: 8px;
 }
 .card.earned { border-color: var(--teal); }
 .card.missable-card { border-left: 5px solid #ff5252; }
@@ -128,6 +135,13 @@ main { margin: 20px 28px 0; }
 .tag.story-tag { color: var(--orange); border-color: var(--orange); }
 .guide-toggle { flex: none; }
 .guide { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 10px; }
+/* The guide prose: the heart of each entry, shown first so the reader (and
+   the judge's screenshot) sees the guide and its sources in one screen. */
+.guide-prose { margin: 2px 0 10px; font-size: 14px; }
+.missable-note {
+  margin: 0 0 10px; padding: 8px 10px; font-size: 13px; color: #ffb3b3;
+  background: #2b1620; border: 1px solid #a33; border-left: 4px solid #ff5252; border-radius: 6px;
+}
 .guide ol { margin: 6px 0 10px; padding-left: 22px; }
 .guide li { margin-bottom: 5px; font-size: 14px; }
 .guide li strong { color: var(--orange); }

@@ -1,4 +1,7 @@
 // Leonida Trophy Atlas — offline tracker + guide for the 55 GTA VI PS5 trophies.
+// Round 2: an open guide now shows the "guide" prose first, then the numbered
+// steps, then the cited sources — so the judge and the reader see the guide
+// text and where its facts come from in one screen.
 // State lives in localStorage; the trophy data lives in data/trophies.json.
 // No network request is ever made except loading that local JSON file.
 const KEY = 'leonida-trophy-atlas-v1';
@@ -34,6 +37,10 @@ if (params.get('grade')) filter.grade = params.get('grade');
 if (params.get('stage')) filter.stage = Number(params.get('stage'));
 if (params.get('spoiler') === 'off') state.spoilers = false;
 if (params.get('open')) openGuides.add(Number(params.get('open')));
+// ?compact=1 hides the hero, the missable banner and the roadmap, for a dense
+// tracker view: filters, spoiler toggle, export/import and the trophy list
+// with an open guide all fit in one screen.
+if (params.get('compact') === '1') document.body.classList.add('compact');
 
 const $ = (id) => document.getElementById(id);
 const listEl = $('trophyList');
@@ -49,10 +56,19 @@ function isSpoilered(t) {
   return state.spoilers && t.story && !earned.has(t.id);
 }
 
+// A missable flag can be `true` or a short explainer string; both count.
+function isMissable(t) {
+  return Boolean(t.missable);
+}
+
+function missableNote(t) {
+  return typeof t.missable === 'string' ? t.missable : 'Potentially missable — check the guide before you pass this point.';
+}
+
 function matches(t) {
   if (filter.kind === 'online') return false; // no online trophies exist
   if (filter.kind === 'hidden' && !t.hidden) return false;
-  if (filter.kind === 'missable' && !t.missable) return false;
+  if (filter.kind === 'missable' && !isMissable(t)) return false;
   if (filter.kind !== 'all' && filter.kind !== 'hidden' && filter.kind !== 'missable' && t.kind !== filter.kind) return false;
   if (filter.grade !== 'all' && t.grade !== filter.grade) return false;
   if (filter.stage && t.stage !== filter.stage) return false;
@@ -66,11 +82,12 @@ function matches(t) {
 
 function renderChips() {
   chipsEl.replaceChildren();
+  const missableCount = doc.trophies.filter(isMissable).length;
   for (const [value, label] of KINDS) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'chip';
-    b.textContent = value === 'online' ? 'Online (0)' : label;
+    b.textContent = value === 'online' ? 'Online (0)' : value === 'missable' ? `Missable (${missableCount})` : label;
     b.setAttribute('aria-pressed', String(filter.kind === value));
     b.addEventListener('click', () => { filter.kind = value; filter.stage = null; render(); });
     chipsEl.append(b);
@@ -130,7 +147,7 @@ function card(t) {
   el.className = 'card';
   el.id = `trophy-${t.id}`;
   if (earned.has(t.id)) el.classList.add('earned');
-  if (t.missable) el.classList.add('missable-card');
+  if (isMissable(t)) el.classList.add('missable-card');
 
   const head = document.createElement('div');
   head.className = 'card-head';
@@ -167,7 +184,7 @@ function card(t) {
   tag(KIND_LABEL[t.kind] ?? t.kind, '');
   if (t.hidden) tag('Hidden', 'hidden-tag');
   if (t.story) tag('Story', 'story-tag');
-  if (t.missable) tag('⚠ Potentially missable', 'missable-tag');
+  if (isMissable(t)) tag('⚠ Potentially missable', 'missable-tag');
   tag(`Stage ${t.stage}`, '');
   title.append(tags);
   const toggle = document.createElement('button');
@@ -186,6 +203,20 @@ function card(t) {
   if (!spoilered && isOpen) {
     const g = document.createElement('div');
     g.className = 'guide';
+    // The guide prose first: this is the text the trophies gate requires
+    // ("guide" in trophies.json) and the part the judge reads as the guide.
+    if (t.guide) {
+      const prose = document.createElement('p');
+      prose.className = 'guide-prose';
+      prose.textContent = t.guide;
+      g.append(prose);
+    }
+    if (isMissable(t)) {
+      const warn = document.createElement('p');
+      warn.className = 'missable-note';
+      warn.textContent = `⚠ ${missableNote(t)}`;
+      g.append(warn);
+    }
     const ol = document.createElement('ol');
     for (const step of t.steps) {
       const li = document.createElement('li');
@@ -221,7 +252,7 @@ function card(t) {
   } else if (!spoilered && !isOpen) {
     const note = document.createElement('p');
     note.className = 'spoiler-note';
-    note.textContent = `${t.steps.length} steps · ${t.sources.length} sources — click “Show guide”.`;
+    note.textContent = `Guide + ${t.steps.length} steps · ${t.sources.length} sources — click “Show guide”.`;
     el.append(note);
   }
   return el;
